@@ -4,12 +4,13 @@ import android.app.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 
-public class MainActivity extends /*Activity*/ AppCompatActivity {
+public class MainActivity extends Activity /*AppCompatActivity*/ {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +42,16 @@ public class MainActivity extends /*Activity*/ AppCompatActivity {
 
                 int top = customView.getTop();
                 int left = customView.getLeft();
-                Log.d("custom-view", "View: top: " + top + ", left: " + left);
+                Log.d("custom-view", "View: top: " + top + ", left: " + left + ", height: " + customView.getHeight());
 
                 Window window = getWindow();
+
+                // Display metrics
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                window.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                //int displayMetricsWidth = displayMetrics.widthPixels;
+                int displayMetricsHeight = displayMetrics.heightPixels;
+                Log.w("custom-view", "Display-metrics: height: " + displayMetricsHeight);
 
                 // Android content view
                 View androidContentView = window.findViewById(Window.ID_ANDROID_CONTENT);
@@ -55,9 +63,9 @@ public class MainActivity extends /*Activity*/ AppCompatActivity {
                 androidContentView.getWindowVisibleDisplayFrame(androidContentViewRect);
                 Log.d("custom-view", "Android-content-view: visible-display: top: " + androidContentViewRect.top + ", left: " + androidContentViewRect.left + ", height: " + androidContentViewRect.height());
 
-                int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-                int contentViewLeft = window.findViewById(Window.ID_ANDROID_CONTENT).getLeft();
-                Log.d("custom-view", "Android-content-view top: " + contentViewTop + ", left: " + contentViewLeft);
+                int contentViewTop = androidContentView.getTop();
+                int contentViewLeft = androidContentView.getLeft();
+                Log.d("custom-view", "Android-content-view top: " + contentViewTop + ", left: " + contentViewLeft + ", height: " + androidContentView.getHeight());
 
                 // Decor view
                 View decorView = window.getDecorView();
@@ -69,7 +77,7 @@ public class MainActivity extends /*Activity*/ AppCompatActivity {
                 decorView.getWindowVisibleDisplayFrame(decorViewRect);
                 Log.d("custom-view", "Decor-view: visible-display: top: " + decorViewRect.top + ", left: " + decorViewRect.left + ", height: " + decorViewRect.height());
 
-                Log.d("custom-view", "Decor-view: top: " + decorView.getTop() + ", left: " + decorView.getLeft());
+                Log.d("custom-view", "Decor-view: top: " + decorView.getTop() + ", left: " + decorView.getLeft() + ", height: " + decorView.getHeight());
 
                 // Calculating status bar height
                 int statusBarHeight = decorViewRect.top;
