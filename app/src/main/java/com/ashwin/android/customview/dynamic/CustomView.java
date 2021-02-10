@@ -1,4 +1,4 @@
-package com.ashwin.android.customview;
+package com.ashwin.android.customview.dynamic;
 
 import android.content.Context;
 import android.graphics.Canvas;
